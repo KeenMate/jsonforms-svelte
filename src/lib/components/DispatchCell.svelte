@@ -25,7 +25,6 @@
 		renderers?: JsonFormsRendererRegistryEntry[]
 		cells?: JsonFormsCellRendererRegistryEntry[]
 		config?: Object
-
 		[key: string]: any
 	}
 

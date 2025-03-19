@@ -21,7 +21,7 @@
 		type UISchemaElement,
 		type ValidationMode
 	} from "@jsonforms/core"
-	import {JsonFormsDispatchContextKey, JsonFormsSubStatesContextKey} from "../constants/context-keys.js"
+	import {JsonFormsDispatchContextKey, JsonFormsSubStatesContextKey} from "../constants/index.js"
 	import {type Ajv, type ErrorObject} from "ajv"
 	import {isObject} from "lodash"
 
@@ -128,7 +128,7 @@
 	})
 	$effect(() => {
 		jsonforms.core = untrack(() => middleware)(
-			jsonforms.core as JsonFormsCore,
+			untrack(() => jsonforms.core) as JsonFormsCore,
 			Actions.updateCore(
 				dataToUse,
 				schemaToUse,
