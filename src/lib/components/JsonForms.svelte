@@ -2,8 +2,11 @@
 	import DispatchRenderer from "$lib/components/DispatchRenderer.svelte"
 	import {setContext, untrack} from "svelte"
 	import {
-		Actions, configReducer,
-		type CoreActions, coreReducer, defaultMiddleware,
+		Actions,
+		configReducer,
+		type CoreActions,
+		coreReducer,
+		defaultMiddleware,
 		type Dispatch,
 		Generate,
 		i18nReducer,
@@ -53,7 +56,7 @@
 		    i18n             = undefined,
 		    additionalErrors = [],
 		    middleware       = defaultMiddleware,
-		onChange = undefined
+		    onChange         = undefined
 	    }: Props = $props()
 
 	let dataToUse               = $state()
@@ -167,7 +170,7 @@
 
 		if (["jsonforms/UPDATE", "jsonforms/UPDATE_ERRORS"].includes(action.type)) {
 			onChange?.({
-				data: jsonforms.core.data,
+				data:   jsonforms.core.data,
 				errors: jsonforms.core.errors,
 			})
 		}

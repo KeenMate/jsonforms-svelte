@@ -5,11 +5,17 @@
 		type CoreActions,
 		createId,
 		type Dispatch,
-		isControl, type JsonFormsCellRendererRegistryEntry, type JsonFormsRendererRegistryEntry,
-		type JsonFormsSubStates, type JsonSchema, mapDispatchToControlProps, mapStateToDispatchCellProps,
+		isControl,
+		type JsonFormsCellRendererRegistryEntry,
+		type JsonFormsRendererRegistryEntry,
+		type JsonFormsSubStates,
+		type JsonSchema,
+		mapDispatchToControlProps,
+		mapStateToDispatchCellProps,
 		removeId
 	} from "@jsonforms/core"
 	import maxBy from "lodash/maxBy.js"
+	import UnknownRenderer from "./UnknownRenderer.svelte"
 
 	interface Props<U> {
 		schema: JsonSchema
@@ -19,6 +25,7 @@
 		renderers?: JsonFormsRendererRegistryEntry[]
 		cells?: JsonFormsCellRendererRegistryEntry[]
 		config?: Object
+
 		[key: string]: any
 	}
 
@@ -38,7 +45,7 @@
 
 	let id: string | undefined = $state(undefined)
 
-	let control = $derived({
+	let control        = $derived({
 		...allProps,
 		...mapStateToDispatchCellProps({jsonforms}, allProps),
 		id,
@@ -46,18 +53,18 @@
 	let DeterminedCell = $derived.by(() => {
 		const testerContext = {
 			rootSchema: control.rootSchema,
-			config: allProps.config,
-		};
-		const maxCell = maxBy(control.cells, (r) =>
+			config:     allProps.config,
+		}
+		const maxCell       = maxBy(control.cells, (r) =>
 			r.tester(control.uischema, control.schema, testerContext)
-		);
+		)
 		if (
 			maxCell === undefined ||
 			maxCell.tester(control.uischema, control.schema, testerContext) === -1
 		) {
-			return UnknownRenderer;
+			return UnknownRenderer
 		} else {
-			return maxCell.cell;
+			return maxCell.cell
 		}
 	})
 

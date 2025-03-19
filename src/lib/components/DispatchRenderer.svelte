@@ -2,13 +2,17 @@
 	import {getContext} from "svelte"
 	import {
 		type CoreActions,
-		type Dispatch, type JsonFormsCellRendererRegistryEntry, type JsonFormsRendererRegistryEntry,
-		type JsonFormsSubStates, type JsonSchema,
+		type Dispatch,
+		type JsonFormsCellRendererRegistryEntry,
+		type JsonFormsRendererRegistryEntry,
+		type JsonFormsSubStates,
+		type JsonSchema,
 		mapStateToJsonFormsRendererProps,
 		type StatePropsOfJsonFormsRenderer
 	} from "@jsonforms/core"
 	import {JsonFormsDispatchContextKey, JsonFormsSubStatesContextKey} from "../constants/context-keys.js"
 	import maxBy from "lodash/maxBy.js"
+	import UnknownRenderer from "./UnknownRenderer.svelte"
 
 	interface Props<U> {
 		schema: JsonSchema
@@ -40,14 +44,14 @@
 		const {rootSchema: _rootSchema, ...rest} = rawProps
 		return rest
 	})
-	let DeterminedRenderer = $derived.by(() => {
+	let DeterminedRenderer                      = $derived.by(() => {
 		const testerContext = {
 			rootSchema: rootSchema,
-			config: allProps?.config,
-		};
-		const maxRenderer = maxBy(renderer.renderers, (r) =>
+			config:     allProps?.config,
+		}
+		const maxRenderer   = maxBy(renderer.renderers, (r) =>
 			r.tester(renderer.uischema, renderer.schema, testerContext)
-		);
+		)
 		if (
 			maxRenderer === undefined ||
 			maxRenderer.tester(
@@ -56,9 +60,9 @@
 				testerContext
 			) === -1
 		) {
-			return UnknownRenderer;
+			return UnknownRenderer
 		} else {
-			return maxRenderer.renderer;
+			return maxRenderer.renderer
 		}
 	})
 </script>
