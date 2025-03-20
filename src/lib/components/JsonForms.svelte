@@ -21,7 +21,10 @@
 		type UISchemaElement,
 		type ValidationMode
 	} from "@jsonforms/core"
-	import {JsonFormsDispatchContextKey, JsonFormsSubStatesContextKey} from "../constants/index.js"
+	import {
+		JsonFormsDispatchContextKey,
+		JsonFormsSubStatesContextKey
+	} from "../constants/index.js"
 	import {type Ajv, type ErrorObject} from "ajv"
 	import {isObject} from "lodash"
 
